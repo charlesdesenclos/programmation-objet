@@ -1,11 +1,10 @@
 <?php include("user.php");?>
-
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset='utf-8'>
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <title>Page Title</title>
+    <title>Programmation objet</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
     <script src='main.js'></script>
@@ -17,23 +16,30 @@
         <input type="text" placeholder="Entrez votre nom" name="nom" required>
         <label><b>Password :</b></label>
         <input type="password" placeholder="Entrez votre mot de passe" name="mdp" required>
-        <input type="submit" name="submit">
+        <input type="submit" name="submit" value="Connection">
     </form>
+
+    
 
     <?php echo"Test de class User ?" ?>
     <?php
-        $U1 = new User("Toto","123");
-        $U2 = new User("Titi","124");
-        $U3 = new User("Tutu","abc");
-        $U4 = new User("Tata","gq");
-        $U5 = new User("Tete","45");
-
-        $Tableau_User = array();
-        array_push($Tableau_User, $U1);
-        array_push($Tableau_User, $U2);
-        array_push($Tableau_User, $U3);
-        array_push($Tableau_User, $U4);
-        array_push($Tableau_User, $U5);
+    $Tableau_User = array();
+    try {
+        $bdd = new PDO("mysql:host =192.168.65.202;dbname=User;charset=utf8", "root", "root");
+        $req = "SELECT * FROM User";
+        $reponses = $bdd->query($req);
+        while ($donnees = $reponses->fetch())
+    {
+        echo '<p>' .$donnees['id']  . "  ". $donnees['login'] . "  ". $donnees['mdp'] . '</p>';
+        array_push($Tableau_User,new User($donnees['id'],$donnees['login'],$donnees['mdp']));
+        
+    } 
+    }
+    catch(PDOException $e)
+    {
+        die('Erreur : '.$e->getMessage());
+    }
+       
 
 
         $mdp = "";
@@ -64,13 +70,11 @@
                 echo "User Inconnu vérifier othographe";
             }
         }
-            
-  
-        
-
-
-
     ?>
+    <hr>
+
+    
+
 
 
 </body>

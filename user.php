@@ -2,6 +2,7 @@
     echo"qhfdsqoi";
     class User{
 
+        private $id_;
         private $login_;
         private $mdp_;
         //Propriété (Private)
@@ -9,10 +10,11 @@
 
 
         //Méthodes (Public)
-        public function __construct($NewLogin, $NewMdp)
+        public function __construct($id_,$NewLogin, $NewMdp)
         {
             $this-> login_ = $NewLogin;
             $this-> mdp_ = $NewMdp;
+            $this->id_ = $id_;
         }
         public function getNom()
         {
@@ -30,10 +32,9 @@
             {
                 return false;
             }
-
-        
-            
+ 
         }
+       
     }
 
 ?>
